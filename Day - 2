@@ -1,0 +1,56 @@
+* today i have solved the problem of the day on leetcode and GFG
+leetcode : finding champion -> for this just find the nodes which has zero degree
+
+class Solution {
+    public int findChampion(int n, int[][] edges) {
+        Set<Integer> h =new HashSet<>();
+        for(int a[]:edges)
+        {
+            h.add(a[1]);
+        }
+        if(h.size()!=n-1)
+        return -1;
+        for(int i=0;i<n;i++)
+        {
+            if(!h.contains(i))
+            return i;
+        }
+        return -1;
+    }
+}
+
+GFG : maximum circular subarray sum -> this can be done with help of kadane's algorithm  : intution is find the maximum,
+minimum subarrays sum using kadane's  and if all elements aree +v then maxsum is the answer so ans is max(maxsubsum,tot-minsum)
+
+class Solution {
+
+    // a: input array
+    // n: size of array
+    // Function to find maximum circular subarray sum.
+    public int circularSubarraySum(int arr[]) {
+
+        // Your code here
+    
+        int max=Integer.MIN_VALUE,cursum1=0,minsum=Integer.MAX_VALUE,tot=0,cursum2=0;
+        for(int i=0;i<arr.length;i++)
+        {
+            cursum1+=arr[i];
+            
+            cursum2+=arr[i];
+            
+            tot+=arr[i]; 
+            
+            max=Math.max(max,cursum1);
+            
+            minsum=Math.min(minsum,cursum2);
+            
+            if(cursum1<0)
+                cursum1=0;
+                
+            if(cursum2>0)
+                cursum2=0;
+        }
+       
+        return Math.max(max,tot-minsum);
+    }
+}
