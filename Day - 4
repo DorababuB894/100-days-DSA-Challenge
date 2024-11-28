@@ -1,0 +1,89 @@
+Today i have solved the problem of the day for leetcode and GFG
+
+Leetcode : the problem is finding minimal obstacle removal for reaching the n-1,m-1 cell
+this can be done using dijkristras or BFS 0,1 : https://leetcode.com/problems/minimum-obstacle-removal-to-reach-corner/
+
+class Solution {
+    public int minimumObstacles(int[][] grid) {
+        int n=grid.length,m=grid[0].length;
+        int dist[][]=new int[n][m];
+        for(int d[]:dist)
+        Arrays.fill(d,Integer.MAX_VALUE);
+        PriorityQueue<int[]> pq =new PriorityQueue<>((a,b)->(a[0]-b[0]));
+       pq.offer(new int[]{grid[0][0],0,0});
+       dist[0][0]=grid[0][0];
+       int dr[]={0,-1,0,1};
+       int dc[]={-1,0,1,0};
+       Deque<int[]> dq =new ArrayDeque<>();
+       dq.offer(new int[]{grid[0][0],0,0});
+       while(!dq.isEmpty())
+       {
+           int cur[]=dq.poll();
+           int r=cur[1],c=cur[2],val=cur[0];
+           if(r==n-1&&c==m-1)
+           return val;
+           for(int i=0;i<4;i++)
+           {
+              int nr=dr[i]+r;
+              int nc=dc[i]+c;
+              if(nr<n&&nr>=0&&nc>=0&&nc<m&&dist[nr][nc]==Integer.MAX_VALUE)
+              {
+
+                //    if(val+grid[nr][nc]<dist[nr][nc])
+                //    {
+                //       dist[nr][nc]=val+grid[nr][nc];
+                //       pq.offer(new int[]{dist[nr][nc],nr,nc});
+                //    }
+
+                 if(grid[nr][nc]==0)
+                 {
+                    dist[nr][nc]=val;
+                    dq.addFirst(new int[]{val,nr,nc});
+                 }
+                 else
+                 {
+                     dist[nr][nc]=val+1;
+                    dq.addLast(new int[]{val+1,nr,nc});
+                 }
+              }
+           }
+
+       }
+       return dist[n-1][m-1];
+
+    }
+}
+
+GFG  : String atoi , convert the string to integer  : https://www.geeksforgeeks.org/problems/implement-atoi/1
+
+class Solution {
+    public int myAtoi(String s) {
+        // Your code here
+        int tot=0;
+        char sign='+';
+        int i=0;
+        int n=s.length();
+        while(i<n&&s.charAt(i)==' ')
+        i++;
+        
+        if(i<n)
+        {
+            if(s.charAt(i)=='-'||s.charAt(i)=='+'){
+            sign=s.charAt(i);i++;}
+        }
+        while(i<n)
+        {
+            int digit=s.charAt(i)-'0';
+            if(digit<0||digit>9)
+            break;
+            
+            if((Integer.MAX_VALUE/10)<tot||Integer.MAX_VALUE==tot&&digit>7)
+            {
+                return (sign=='-')?Integer.MIN_VALUE:Integer.MAX_VALUE;
+            }
+            tot=tot*10+digit;
+            i++;
+        }
+        return (sign=='-')?tot*-1:tot;
+    }
+}
