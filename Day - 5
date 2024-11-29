@@ -1,0 +1,75 @@
+today i ahve solved the problem of the days of Leeetcode and GFG
+
+Leetcode : minimum time to reach last cell  : https://leetcode.com/problems/minimum-time-to-visit-a-cell-in-a-grid/description/
+i have done using PriorityQueue to find the shortest time to reach a cell
+
+class Solution {
+    public int minimumTime(int[][] grid) {
+        PriorityQueue<int[]> q =new PriorityQueue<>((a,b)->(a[2]-b[2]));
+        int dirs[][]={{0,-1},{-1,0},{0,1},{1,0}};
+       
+        if(grid[0][1]>1&&grid[1][0]>1)
+        return -1;
+        int n=grid.length,m=grid[0].length;
+
+         boolean vis[][]=new boolean[n][m];
+
+        q.offer(new int[]{0,0,0});
+        vis[0][0]=true;
+        while(!q.isEmpty())
+        {
+           int cur[]=q.poll();
+           int r=cur[0],c=cur[1],time=cur[2];
+           if(r==n-1&&c==m-1)
+           return time;
+           for(int d[]:dirs)
+           {
+              int nr=d[0]+r;
+              int nc=d[1]+c;
+              if(nr<n&&nr>=0&&nc<m&&nc>=0&&vis[nr][nc]==false)
+              {
+                 int newtime=0;
+
+                 int dif=grid[nr][nc]-time;
+
+                 if(dif<=1)newtime=time+1;
+                 else
+                 newtime=time+1+(dif/2)*2;
+
+                 vis[nr][nc]=true;
+                 q.offer(new int[]{nr,nc,newtime});
+              }
+              
+
+           }
+          
+        }
+         return -1;
+    }
+}
+GFG : add two binary Strings : https://www.geeksforgeeks.org/problems/add-binary-strings3805/1
+class Solution {
+    public String addBinary(String s1, String s2) {
+        // code here
+        int i=s1.length()-1,j=s2.length()-1;
+        StringBuffer sb =new StringBuffer();
+        int c=0;
+        while(i>=0||j>=0||c>0)
+        {
+            int b1=(i>=0)?s1.charAt(i)-'0':0;
+            int b2=(j>=0)?s2.charAt(j)-'0':0;
+            
+            int sum=b1+b2+c;
+            
+            sb.append(sum%2);
+            c=sum/2;
+            
+            i--;j--;
+        }
+         while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
+            sb.deleteCharAt(sb.length() - 1); // Remove trailing zeros
+        }
+
+        return sb.reverse().toString();
+    }
+}
