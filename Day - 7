@@ -1,0 +1,37 @@
+Today i have solved the problem of the day for the leetcode and GFG
+Leetcode  : check N and 2*N exists or not
+class Solution {
+    public boolean checkIfExist(int[] nums) {
+        for(int i=0;i<nums.length;i++)
+        {
+            for(int j=0;j<nums.length;j++)
+            {
+                if(i!=j&&nums[i]==nums[j]*2)
+                return true;
+            }
+        }
+        return false;
+    }
+}
+GFG  : first non repeating charachter
+class Solution {
+    // Function to find the first non-repeating character in a string.
+    static char nonRepeatingChar(String s) {
+        // Your code here
+        Map<Character,Integer> h =new HashMap<>();
+        for(int i=0;i<s.length();i++)
+        {
+            char ch=s.charAt(i);
+            h.put(ch,h.getOrDefault(ch,0)+1);
+        }
+          for(int i=0;i<s.length();i++)
+        {
+            char ch=s.charAt(i);
+           if(h.get(ch)==1)
+           return ch;
+        }
+        return '$';
+        
+    }
+}
+
